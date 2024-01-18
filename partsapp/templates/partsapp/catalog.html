@@ -1,0 +1,25 @@
+{% extends 'partsapp/base.html' %}
+
+{% block content %}
+<nav aria-label="breadcrumb" >
+  <ol class="breadcrumb" class="col-ml-10">
+    <li class="breadcrumb-item"><a href= {% url 'home' %} >Главная</a></li>
+    <li class="breadcrumb-item active" aria-current="page">
+       {% if active_model_obj and active_category_obj %}
+          {{ active_category_obj.name }} + {{ active_model_obj.name }}
+       {% elif active_model_obj %}
+          {{ active_model_obj.name }}
+       {% elif active_category_obj %}
+          {{ active_category_obj.name }}
+       {% else %}
+          Каталог
+       {% endif %}
+    </li>
+  </ol>
+</nav>
+
+{% include 'partsapp/product_list.html' %}
+<div class="col-12">
+    {% include 'partsapp/pagination.html' %}
+</div>
+{% endblock %}

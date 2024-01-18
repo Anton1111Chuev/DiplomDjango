@@ -1,0 +1,27 @@
+{% extends 'partsapp/base.html' %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-error">{{ form.non_field_errors }}</div>
+
+    {% for f in form %}
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <p><label class="col-sm-2 col-form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+            <div class="form-error">{{ f.errors }}</div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Войти</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

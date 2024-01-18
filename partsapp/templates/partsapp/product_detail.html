@@ -1,0 +1,45 @@
+{% extends 'partsapp/base.html' %}
+
+{% block content %}
+
+<nav aria-label="breadcrumb" >
+  <ol class="breadcrumb" class="col-ml-10">
+    <li class="breadcrumb-item"><a href= {% url 'home' %} >Главная</a></li>
+    <li class="breadcrumb-item">
+      <a href= {% url 'catalog' active_category active_model %} >
+       {% if active_model_obj and active_category_obj %}
+          {{ active_category_obj.name }} + {{ active_model_obj.name }}
+       {% elif active_model_obj %}
+          {{ active_model_obj.name }}
+       {% elif active_category_obj %}
+          {{ active_category_obj.name }}
+       {% else %}
+          Каталог
+       {% endif %}
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Текущая страница</li>
+  </ol>
+</nav>
+
+<div class="row" xmlns="http://www.w3.org/1999/html">
+
+        <div class="col-md-3">
+            <img src="{{ object.image.url }}" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h3>{{ object.name }}</h3>
+            <h4>{{ object.number }}</h4>
+            <p>Цена: {{ object.price }} </p>
+            <p>Количество на складе: {{ object.qty }} </p>
+            <p>Описание: {{ object.description }} </p>
+            <p>Производитель: {{ object.manufacturer }} </p>
+            <p>Подходит на модели: </p>
+            {% for el in object.car_model.all %}
+                <p style="margin-left: 20px"> -{{ el.name }} </p>
+            {% endfor %}
+            <hr>
+            <a href="{% url 'add_to_cart' slug=product.slug %}"><button class="btn btn-danger">Добавить в корзину</button></a>
+        </div>
+    </div>
+{% endblock %}
